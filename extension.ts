@@ -1,6 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import {window, workspace, commands, Disposable, ExtensionContext, StatusBarAlignment, StatusBarItem, TextDocument} from 'vscode';
+import { window, workspace, commands, Disposable, ExtensionContext, StatusBarAlignment, StatusBarItem, TextDocument } from 'vscode';
 
 // this method is called when your extension is activated. activation is
 // controlled by the activation events defined in package.json
@@ -23,18 +23,21 @@ export function activate(ctx: ExtensionContext) {
 export class WordCounter {
 
     private _statusBarItem: StatusBarItem;
+    private _statusBarItemTime: StatusBarItem;
 
     public updateWordCount() {
-        
+
         // Create as needed
         if (!this._statusBarItem) {
             this._statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left);
-        } 
+            this._statusBarItemTime = window.createStatusBarItem(StatusBarAlignment.Left);
+        }
 
         // Get the current text editor
         let editor = window.activeTextEditor;
         if (!editor) {
             this._statusBarItem.hide();
+            this._statusBarItemTime.hide();
             return;
         }
 
@@ -43,17 +46,27 @@ export class WordCounter {
         // Only update status if an MD file
         if (doc.languageId === "markdown") {
             let wordCount = this._getWordCount(doc);
+            let minutes = wordCount / 200
 
             // Update the status bar
             this._statusBarItem.text = wordCount !== 1 ? `$(pencil) ${wordCount} Words` : '$(pencil) 1 Word';
+            this._statusBarItemTime.text = `$(clock) ${minutes} Minutes Reading`;
+
             this._statusBarItem.show();
+            this._statusBarItemTime.show();
         } else {
             this._statusBarItem.hide();
+            this._statusBarItemTime.hide();
         }
     }
 
     public _getWordCount(doc: TextDocument): number {
         let docContent = doc.getText();
+
+        console.log(docContent)
+
+        // Remove code snippets
+        docContent = docContent.replace(/(```).*[^`]+(```)/gim, '');
 
         // Parse out unwanted whitespace so the split is accurate
         docContent = docContent.replace(/(< ([^>]+)<)/g, '').replace(/\s+/g, ' ');
