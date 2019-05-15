@@ -1,15 +1,5 @@
-# VSCode - WordCount README
+# VSCode - WordCount
  
-This is a simple extension that illustrates a number of concepts when it comes to writing extensions for VS Code.  
+Simple extension for displaying words and minutes for reading of a markdown file while you type.
 
-* Activation on a file type open
-* Contributing to the status bar
-* Subscribing to update events
-* Adding a test to your extension
-* Marking up the `package.json` so the gallery looks good
-
-## Functionality
-
-It's pretty simple open up a `Markdown` file and the status bar will have an auto-updating wordcount in it...
-
-![Word Count in status bar](images/wordcount.gif)
+![Word Count in status bar](images/preview.png)
