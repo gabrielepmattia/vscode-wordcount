@@ -1,7 +1,7 @@
 {
 	"name": "wordcount",
 	"displayName": "Word Count",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "gabrielepmattia",
 	"description": "Word count with reading time",
 	"author": {
