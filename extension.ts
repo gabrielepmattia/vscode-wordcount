@@ -63,8 +63,6 @@ export class WordCounter {
     public _getWordCount(doc: TextDocument): number {
         let docContent = doc.getText();
 
-        console.log(docContent)
-
         // Remove code snippets
         docContent = docContent.replace(/(```).*[^`]+(```)/gim, '');
 
